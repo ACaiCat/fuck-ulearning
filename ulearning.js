@@ -251,12 +251,12 @@
     }
   }
 
-  function checkIsSummaryPage() {
+  function checkIsTextPage() {
     var title = document.querySelector(
       "body > div.header > div > div.course-title.small"
     );
-
-    if (title.textContent == "主要内容") {
+    var videos = document.querySelectorAll("video");
+    if (title.textContent != "单元小测" && videos.length===0) {
       setTimeout(() => {
         nextPage();
       }, 1500);
@@ -490,7 +490,7 @@
     try {
       await checkVideoProgress();
       await autoPlayVideos();
-      await checkIsSummaryPage();
+      await checkIsTextPage();
       await checkUnitTest();
       await checkSleepy();
     } catch (error) {
