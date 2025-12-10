@@ -32,17 +32,17 @@
     const panel = document.createElement("div");
     panel.id = "deepseek-config-panel";
     panel.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 999999;
-            min-width: 300px;
-            font-family: Arial, sans-serif;
+            position: fixed
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            background: white
+            padding: 20px
+            border-radius: 8px
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2)
+            z-index: 999999
+            min-width: 300px
+            font-family: Arial, sans-serif
         `;
 
     // 标题
@@ -57,29 +57,29 @@
     input.placeholder = "请输入您的DeepSeek API密钥";
     input.value = apiKey;
     input.style.cssText = `
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
+            width: 100%
+            padding: 10px
+            margin-bottom: 15px
+            border: 1px solid #ddd
+            border-radius: 4px
+            box-sizing: border-box
         `;
 
     // 按钮容器
     const buttonContainer = document.createElement("div");
-    buttonContainer.style.cssText = "display: flex; gap: 10px;";
+    buttonContainer.style.cssText = "display: flex gap: 10px";
 
     // 保存按钮
     const saveBtn = document.createElement("button");
     saveBtn.textContent = "保存";
     saveBtn.style.cssText = `
-            flex: 1;
-            padding: 8px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            flex: 1
+            padding: 8px
+            background: #4CAF50
+            color: white
+            border: none
+            border-radius: 4px
+            cursor: pointer
         `;
     saveBtn.onclick = () => {
       apiKey = input.value.trim();
@@ -92,20 +92,20 @@
     const cancelBtn = document.createElement("button");
     cancelBtn.textContent = "取消";
     cancelBtn.style.cssText = `
-            flex: 1;
-            padding: 8px;
-            background: #f44336;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            flex: 1
+            padding: 8px
+            background: #f44336
+            color: white
+            border: none
+            border-radius: 4px
+            cursor: pointer
         `;
     cancelBtn.onclick = () => panel.remove();
 
     // 显示当前密钥状态
     const status = document.createElement("div");
     status.textContent = apiKey ? "✅ 已配置密钥" : "❌ 未配置密钥";
-    status.style.cssText = "font-size: 12px; color: #666; margin-top: 10px;";
+    status.style.cssText = "font-size: 12px color: #666 margin-top: 10px";
 
     // 组装面板
     panel.appendChild(title);
@@ -118,12 +118,12 @@
     // 添加遮罩
     const overlay = document.createElement("div");
     overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 999998;
+            position: fixed
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            z-index: 999998
         `;
     overlay.onclick = () => {
       panel.remove();
@@ -144,17 +144,17 @@
     icon.innerHTML = "🔑";
     icon.title = "配置DeepSeek API密钥";
     icon.style.cssText = `
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            cursor: pointer;
-            z-index: 99999;
-            font-size: 14px;
-            border: 1px solid #ddd;
+            position: fixed
+            top: 10px
+            right: 10px
+            background: white
+            padding: 5px 10px
+            border-radius: 15px
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+            cursor: pointer
+            z-index: 99999
+            font-size: 14px
+            border: 1px solid #ddd
         `;
     icon.onclick = showConfigPanel;
     document.body.appendChild(icon);
@@ -210,19 +210,18 @@
       "#aiPanel > div.page-control-area > div > div.next-page-btn.cursor"
     );
 
-
     nextButton.click();
     await sleep(1000);
 
     // 检查并处理离开确认弹窗
     const sureLeave = document.querySelector(
-    "#alertModal > div > div > div.modal-body > div:nth-child(2) > div.modal-operation > button.btn-hollow"
+      "#alertModal > div > div > div.modal-body > div:nth-child(2) > div.modal-operation > button.btn-hollow"
     );
 
     if (sureLeave) {
-    await sleep(500);
-    sureLeave.click();
-    await sleep(1000);
+      await sleep(500);
+      sureLeave.click();
+      await sleep(1000);
     }
   }
 
@@ -241,6 +240,15 @@
         });
       }
     });
+  }
+
+  function checkSleepy() {
+    var sleepyButton = document.querySelector(
+      "#alertModal > div > div > div.modal-body > div:nth-child(9) > div.modal-operation > button"
+    );
+    if (sleepyButton) {
+      sleepyButton.click();
+    }
   }
 
   function checkIsSummaryPage() {
@@ -380,7 +388,6 @@
   }
 
   async function checkUnitTest() {
-
     var titleElement = document.querySelector(
       "body > div.header > div > div.course-title.small"
     );
@@ -466,7 +473,7 @@
 
     console.log("所有题目处理完成，准备提交...");
 
-    await sleep(2000); 
+    await sleep(2000);
 
     const submitButton = document.querySelector(
       "[id^=pageElement] > div > div > div.question-operation-area > button"
@@ -485,6 +492,7 @@
       await autoPlayVideos();
       await checkIsSummaryPage();
       await checkUnitTest();
+      await checkSleepy();
     } catch (error) {
       console.error("主循环执行出错:", error);
     }
