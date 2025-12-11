@@ -185,7 +185,8 @@
 
       console.log(span.textContent.trim());
 
-      if (span.textContent.trim() !== "已看完") {
+      if (span.textContent.trim() !== "已看完" && allFinished) {
+        playVideos(index);
         allFinished = false;
       }
     });
@@ -223,22 +224,16 @@
     }
   }
 
-  function autoPlayVideos() {
+  function playVideos(index) {
     const videos = document.querySelectorAll("video");
+    
+    const video = videos[index];
 
-    for (let i = 0; i < videos.length; i++) {
-      const video = videos[i];
-
-      if (!video.paused) {
-        break;
-      }
-
-      if (video.paused && !video.ended) {
-        video.play().catch((error) => {
-          console.log("视频自动播放失败:", error.message);
-        });
-        break;
-      }
+    if (video.paused) {
+      console.log("尝试播放:", index);
+      video.play().catch((error) => {
+        console.log("视频自动播放失败:", error.message);
+      });
     }
   }
 
@@ -489,7 +484,6 @@
   setInterval(async () => {
     try {
       await checkVideoProgress();
-      await autoPlayVideos();
       await checkIsTextPage();
       await checkUnitTest();
       await checkSleepy();
