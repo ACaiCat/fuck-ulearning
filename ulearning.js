@@ -179,26 +179,24 @@
 
   // 检测视频进度
   function checkVideoProgress() {
-    // 查找所有进度元素
-    const progressElements = document.querySelectorAll(".video-progress");
-    progressElements.forEach((element, index) => {
-      // 查找进度文本
-      const textSpan = element.querySelector(".text span");
-      if (!textSpan) return;
-      const text = textSpan.textContent.trim();
-      if (text === "已看完" || text === "finished") {
-        if (!element.hasAttribute("data-completed")) {
-          element.setAttribute("data-completed", "true");
-          onVideoComplete(index, element);
-        }
-        return;
+    var allFinished = true;
+    document.querySelectorAll(".video-progress").forEach((element, index) => {
+      const span = element.querySelector(".text");
+
+      console.log(span.textContent.trim());
+
+      if (span.textContent.trim() !== "已看完") {
+        allFinished = false;
       }
     });
+    if (allFinished) {
+      onVideoComplete();
+    }
   }
 
   // 视频完成时的回调函数
-  async function onVideoComplete(videoIndex, element) {
-    console.log(`🎬 视频 ${videoIndex + 1} 已完成观看!`, element);
+  async function onVideoComplete() {
+    console.log(`🎬 视频已完成观看!`);
     await sleep(1000); // 等待1秒
     await nextPage();
   }
@@ -226,20 +224,22 @@
   }
 
   function autoPlayVideos() {
-    // 获取页面中所有视频元素
     const videos = document.querySelectorAll("video");
 
-    // 遍历每个视频
-    videos.forEach((video) => {
-      // 如果视频已暂停且不是结束状态
+    for (let i = 0; i < videos.length; i++) {
+      const video = videos[i];
+
+      if (!video.paused) {
+        break;
+      }
+
       if (video.paused && !video.ended) {
-        // 尝试播放视频
         video.play().catch((error) => {
-          // 如果播放失败，静默处理（不显示错误）
           console.log("视频自动播放失败:", error.message);
         });
+        break;
       }
-    });
+    }
   }
 
   function checkSleepy() {
@@ -256,7 +256,7 @@
       "body > div.header > div > div.course-title.small"
     );
     var videos = document.querySelectorAll("video");
-    if (title.textContent != "单元小测" && videos.length===0) {
+    if (title.textContent != "单元小测" && videos.length === 0) {
       setTimeout(() => {
         nextPage();
       }, 1500);
